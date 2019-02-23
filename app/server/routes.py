@@ -76,35 +76,6 @@ def login():
         return make_response(jsonify(responseObject)), 500
 
 
-@app.route('/api/logout')
-def logout():
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        auth_token = auth_header.split(" ")[1]
-    else:
-        auth_token = ''
-    if auth_token:
-        resp = User.decode_auth_token(auth_token)
-        if not isinstance(resp, str):
-            responseObject = {
-                    'status': 'success',
-                    'message': 'Successfully logged out.'
-                }
-            return make_response(jsonify(responseObject)), 200
-        else:
-            responseObject = {
-                    'status': 'failed',
-                    'message': resp
-                }
-            return make_response(jsonify(responseObject)), 500
-    else:
-        responseObject = {
-                'status': 'failed',
-                'message': 'Error in logging out. Invalid token'
-        }
-        return make_response(jsonify(responseObject)), 401
-
-
 @app.route('/api/status')
 def status():
     auth_header = request.headers.get('Authorization')
@@ -116,7 +87,7 @@ def status():
                 'status': 'fail',
                 'message': 'Bearer token malformed.'
             }
-            return make_response(jsonify(responseObject)), 401
+            return make_response(jsonify(responseObject)), 200
     else:
         auth_token = ''
     if auth_token:
@@ -136,10 +107,10 @@ def status():
             'status': 'fail',
             'message': resp
         }
-        return make_response(jsonify(responseObject)), 401
+        return make_response(jsonify(responseObject)), 200
     else:
         responseObject = {
             'status': 'failed',
             'message': 'Provide a valid auth token.'
         }
-        return make_response(jsonify(responseObject)), 401
+        return make_response(jsonify(responseObject)), 200
