@@ -11,6 +11,7 @@ function ($scope, $location, AuthService) {
     AuthService.login($scope.loginForm.email, $scope.loginForm.password)
       .then(function (response) {
         localStorage.setItem('token', response.data.auth_token); 
+        localStorage.setItem('userName', response.data.user);
         $location.path('/');
         $scope.disabled = false;
         $scope.loginForm = {};
@@ -46,10 +47,12 @@ function ($scope, $location, AuthService) {
     $scope.error = false;
     $scope.disabled = true;
 
-    AuthService.register($scope.registerForm.email,
+    AuthService.register($scope.registerForm.name,
+                         $scope.registerForm.email,
                          $scope.registerForm.password)
       .then(function (response) {
         localStorage.setItem('token', response.data.auth_token); 
+        localStorage.setItem('userName', response.data.user);
         $location.path('/login');
         $scope.disabled = false;
         $scope.registerForm = {};
@@ -63,4 +66,11 @@ function ($scope, $location, AuthService) {
 
   };
 
+}]);
+
+
+angular.module('myApp').controller('userProfileController',
+['$scope', '$location', 'AuthService',
+function ($scope, $location, AuthService) {
+    $scope.userName = localStorage.getItem('userName');
 }]);

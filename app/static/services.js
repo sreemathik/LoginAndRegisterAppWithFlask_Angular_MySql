@@ -14,8 +14,8 @@ angular.module('myApp').factory('AuthService',
        return $http.post('/api/login', {email: email, password: password}, {headers: headers});
     }
 
-    function register(email, password) {
-       return $http.post('/api/register', {email: email, password: password}, {headers: headers});
+    function register(name, email, password) {
+       return $http.post('/api/register', {name: name, email: email, password: password}, {headers: headers});
     }
 
     function isAuthenticated() {

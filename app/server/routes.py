@@ -16,6 +16,7 @@ def register():
     if not user :
         try:
             user = User(
+                name = json_data.get('name'),
                 email = json_data.get('email'),
                 password = json_data.get('password')
             )
@@ -28,7 +29,8 @@ def register():
             responseObject = {
                 'status': 'success',
                 'message': 'User successfully registered',
-                'auth_token': auth_token.decode()
+                'auth_token': auth_token.decode(),
+                'user': user.name
             }
             return make_response(jsonify(responseObject)), 200
         except Exception as e:
@@ -58,7 +60,8 @@ def login():
                     responseObject = {
                         'status': 'success',
                         'message': 'Successfully logged in.',
-                        'auth_token': auth_token.decode()
+                        'auth_token': auth_token.decode(),
+                        'user': user.name
                     }
                     return make_response(jsonify(responseObject)), 200
         else:
@@ -66,7 +69,7 @@ def login():
                         'status': 'failed',
                         'message': 'User does not exist'
                     }
-            return make_response(jsonify(responseObject)), 200 
+            return make_response(jsonify(responseObject)), 500 
     except Exception as e:
         print(e)
         responseObject = {
@@ -97,8 +100,7 @@ def status():
             responseObject = {
                 'status': 'success',
                 'data': {
-                    'user_id': user.id,
-                    'email': user.email,
+                    'user': user.name,
                     'registered_on': user.registered_on
                 }
             }
