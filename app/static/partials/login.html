@@ -1,17 +1,24 @@
 <div class="col-md-4">
     <h1>Login</h1>
     <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
-    <form class="form" ng-submit="login()">
+    <form class="form" novalidate ng-submit="login()" name="myForm">
         <div class="form-group">
-        <label>Email</label>
-        <input type="text" class="form-control" name="email" ng-model="loginForm.email" required>
+            <label>Email</label>
+            <input type="email" class="form-control" name="email" ng-model="loginForm.email" required>
+            <span class="has-error alert text-danger" ng-show="myForm.$dirty && myForm.email.$touched">
+                    <span ng-show="myForm.email.$error.required">This is a required field</span>
+                    <span ng-show="myForm.email.$invalid">Please enter a valid e-mail</span>
+            </span>
         </div>
         <div class="form-group">
         <label>Password</label>
             <input type="password" class="form-control" name="password" ng-model="loginForm.password" required>
+            <span class="has-error alert text-danger" ng-show="myForm.$dirty && myForm.password.$touched">
+                    <span ng-show="myForm.password.$error.required">This is a required field</span>
+            </span>
         </div>
         <div>
-            <button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>  
+            <button type="submit" class="btn btn-default" ng-disabled="myForm.$invalid">Login</button>  
         </div>
         <div>
             <label>Don't have an account?</label> <a href="/register">Register here</a>
