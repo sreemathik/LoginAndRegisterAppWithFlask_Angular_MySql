@@ -1,0 +1,22 @@
+version: "2"
+services:
+  project:
+    build: ./
+    links:
+      - db
+    ports:
+      - "5000:5000"
+    environment:
+      mysql_user: root
+      mysql_password: root
+      mysql_host: db 
+
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro

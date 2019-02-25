@@ -1,6 +1,13 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
-mysql_local_base = 'mysql+pymysql://test:password@localhost/'
+
+# db credentials
+user = os.environ.get("mysql_user") or "test"
+password = os.environ.get("mysql_password") or "password"
+host = os.environ.get("mysql_host") or "localhost"
+
+mysql_local_base = 'mysql+pymysql://' + user + ':' + password + '@' + host +'/'
+print(mysql_local_base)
 database_name = 'reBit'
 
 class Config(object):

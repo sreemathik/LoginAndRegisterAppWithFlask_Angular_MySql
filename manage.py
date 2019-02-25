@@ -1,6 +1,6 @@
 import os
 
-from flask_script import Manager
+from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
 
 from app.server import app, db
@@ -31,4 +31,5 @@ def create_data():
 
 
 if __name__ == '__main__':
+    manager.add_command('runserver', Server(host='0.0.0.0'))
     manager.run()
